@@ -1,0 +1,22 @@
+# Środowisko wirtualne (Wymóg: nie przesyłamy venv na Git)
+venv/
+ENV/
+env/
+
+
+# Pliki Pythona i cache
+
+__pycache__/
+*.py[cod]
+
+*$py.class
+
+# Raporty z testów i pokrycia (Wymóg: generowane lokalnie lub w CI/CD)
+report.html
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Baza danych (Wymóg: baza danych w pamięci lub lokalna do testów)
+*.db
+*.sqlite3
