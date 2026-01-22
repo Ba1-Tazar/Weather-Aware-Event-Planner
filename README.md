@@ -1,28 +1,26 @@
 # Weather-Aware Event Planner
 
 ## 1. Opis projektu
-Weather-Aware Event Planner to aplikacja konsolowa (CLI) służąca do zarządzania nadchodzącymi wydarzeniami z uwzględnieniem prognozy pogody. System pozwala na zapisywanie wydarzeń w bazie danych oraz automatyczne sprawdzanie warunków atmosferycznych dla wybranych lokalizacji przy użyciu zewnętrznego API. 
+Weather-Aware Event Planner to aplikacja do zarządzania wydarzeniami zintegrowana z prognozą pogody. System pozwala na przechowywanie planowanych wydarzeń w lokalnej bazie danych oraz dynamiczne sprawdzanie warunków atmosferycznych dla wybranych lokalizacji. 
 
-Projekt został przygotowany jako praca zaliczeniowa, łącząca funkcjonalności zarządzania obiektami (zgodnie z Mini Projektem 1) oraz integrację z systemami rozproszonymi i bazami danych (zgodnie z Mini Projektem 2).
+Projekt realizuje wymagania zaliczeniowe poprzez połączenie logiki biznesowej z dwoma zewnętrznymi usługami oraz kompleksowym zestawem testów.
 
-## 2. Funkcjonalności
-* **Repozytorium Wydarzeń**: Dodawanie, aktualizowanie oraz przeglądanie listy wydarzeń.
-* **Integracja Pogodowa**: Pobieranie rzeczywistych danych pogodowych dla miast przy użyciu API Open-Meteo.
-* **Trwałość danych**: Wykorzystanie bazy danych SQLite do przechowywania informacji.
+## 2. Architektura i Serwisy Zewnętrzne
+Aplikacja korzysta z dwóch zewnętrznych systemów, z których każdy jest testowany inną techniką:
 
-## 3. Serwisy zewnętrzne i techniki testowania
-Zgodnie z wymaganiami projekt wykorzystuje:
-* **Serwis 1: Baza danych SQLite** – wykorzystywana do przechowywania obiektów `Event`.
-    * *Technika testowania*: **Baza danych w pamięci (in-memory)**. Testy integracyjne nie modyfikują plików na dysku, co zapewnia izolację środowiska.
-* **Serwis 2: API Open-Meteo** – zewnętrzne API pogodowe.
-    * *Technika testowania*: **Mockowanie (unittest.mock)**. Komunikacja sieciowa jest zastępowana przez obiekty pozorowane, co pozwala na testowanie aplikacji w trybie offline i zapewnia determinizm testów.
+* **Serwis 1: Baza danych SQLite** – Przechowuje informacje o wydarzeniach (`id`, `title`, `city`).
+    * *Technika testowania*: **In-memory database**. Testy integracyjne używają bazy w pamięci (`:memory:`), co gwarantuje szybkość i brak efektów ubocznych w systemie plików.
+* **Serwis 2: API Open-Meteo** – Dostarcza rzeczywiste dane pogodowe.
+    * *Technika testowania*: **Mockowanie (unittest.mock)**. W testach symulujemy odpowiedzi serwera (success/failure), co pozwala na testowanie logiki bez połączenia z internetem.
 
-## 4. Instrukcja uruchomienia
+## 3. Instrukcja uruchomienia
 
 ### Wymagania
 * Python 3.8+
-* Biblioteki: `requests`, `pytest`, `pytest-cov`, `pytest-html`
+* Biblioteki: `requests`
 
-### Instalacja zależności
-```bash
-pip install requests pytest pytest-cov pytest-html
+### Instalacja
+1. Sklonuj repozytorium.
+2. Zainstaluj wymagane biblioteki:
+   ```bash
+   pip install requests

@@ -85,7 +85,31 @@ def test_run_command_add_duplicate(capsys):
     run_command(repo, svc, "add 1 Other Krakow")
     captured = capsys.readouterr()
     assert "Error: Event with ID 1 already exists!" in captured.out
+    
+def test_run_command_invalid_id(capsys):
+    """Verify that entering a string instead of a numeric ID is handled"""
+    repo = EventRepository(":memory:")
+    svc = WeatherService()
+    run_command(repo, svc, "add NOT_A_NUMBER Title City")
+    captured = capsys.readouterr()
+    assert "Error: ID must be a number." in captured.out
 
+def test_run_command_delete_nonexistent(capsys):
+    """Verify handling of deleting an event that doesn't exist"""
+    repo = EventRepository(":memory:")
+    svc = WeatherService()
+    run_command(repo, svc, "delete 999")
+    captured = capsys.readouterr()
+    assert "Error: Event 999 not found." in captured.out
+
+def test_run_command_weather_not_found(capsys):
+    """Verify handling of checking weather for an ID that doesn't exist"""
+    repo = EventRepository(":memory:")
+    svc = WeatherService()
+    run_command(repo, svc, "weather 404")
+    captured = capsys.readouterr()
+    assert "Event with that ID not found." in captured.out
+    
 # --- MOCKING TESTS --- 
 
 @patch('app.requests.get')
