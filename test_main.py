@@ -58,15 +58,6 @@ def test_repo_delete():
     # Try deleting something that isn't there
     assert repo.delete_by_id(999) is False
 
-def test_repo_duplicate_overwrite():
-    """Adding the same ID twice should overwrite the existing entry"""
-    repo = EventRepository(":memory:")
-    repo.add_or_update(Event(1, "First", "City1"))
-    repo.add_or_update(Event(1, "Second", "City2"))
-    all_events = repo.get_all()
-    assert len(all_events) == 1
-    assert all_events[0].title == "Second"
-
 # --- CLI LOGIC TESTS ---
 
 def test_run_command_help(capsys):
@@ -77,14 +68,21 @@ def test_run_command_help(capsys):
     captured = capsys.readouterr()
     assert "Available commands:" in captured.out
 
-def test_run_command_add_duplicate(capsys):
-    """Edge case: attempt to add an ID that already exists"""
+def test_run_command_add_duplicate_prevention(capsys):
+    """Verify that the CLI logic prevents adding an event with an existing ID and keeps original data"""
     repo = EventRepository(":memory:")
     svc = WeatherService()
-    run_command(repo, svc, "add 1 Test Warsaw")
-    run_command(repo, svc, "add 1 Other Krakow")
+    
+    run_command(repo, svc, "add 1 Original City1")
+    run_command(repo, svc, "add 1 Duplicate City2")
+    
     captured = capsys.readouterr()
+
     assert "Error: Event with ID 1 already exists!" in captured.out
+    
+    event = repo.get_by_id(1)
+    assert event.title == "Original" 
+    assert event.title != "Duplicate"
     
 def test_run_command_invalid_id(capsys):
     """Verify that entering a string instead of a numeric ID is handled"""

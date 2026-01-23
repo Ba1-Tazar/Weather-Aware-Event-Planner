@@ -13,6 +13,7 @@ def run_command(repo: EventRepository, weather_svc: WeatherService, cmd: str) ->
         print("  add <id> <title> <city> - Adds a new event")
         print("  list                    - Displays list of events")
         print("  weather <id>            - Checks weather for an event")
+        print("  delete <id>             - Removes an event by ID") # Dodano tę linię
         print("  help                    - Displays this help")
         print("  exit                    - Closes the program")
     elif action == "add" and len(parts) == 4:
