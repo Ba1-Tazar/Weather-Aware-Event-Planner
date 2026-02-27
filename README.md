@@ -1,4 +1,4 @@
-# Weather-Aware Event Planner
+# Weather Aware Event Planner
 
 ## 1. Project Description
 **Weather-Aware Event Planner** is an event management application integrated with real-time weather forecasting. The system allows users to store planned events in a local database and dynamically check atmospheric conditions for selected locations.
