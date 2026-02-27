@@ -1,62 +1,57 @@
 # Weather-Aware Event Planner
 
-## 1. Opis projektu
-Weather-Aware Event Planner to aplikacja do zarządzania wydarzeniami zintegrowana z prognozą pogody. System pozwala na przechowywanie planowanych wydarzeń w lokalnej bazie danych oraz dynamiczne sprawdzanie warunków atmosferycznych dla wybranych lokalizacji. 
+## 1. Project Description
+**Weather-Aware Event Planner** is an event management application integrated with real-time weather forecasting. The system allows users to store planned events in a local database and dynamically check atmospheric conditions for selected locations.
 
-Projekt realizuje wymagania zaliczeniowe poprzez połączenie logiki biznesowej z dwoma zewnętrznymi usługami oraz kompleksowym zestawem testów.
+This project fulfills academic requirements by combining business logic with two external services and a comprehensive suite of tests.
 
-## 2. Architektura i Serwisy Zewnętrzne
-Aplikacja korzysta z dwóch zewnętrznych systemów, z których każdy jest testowany inną techniką:
+## 2. Architecture and External Services
+The application utilizes two external systems, each tested using a different methodology:
 
-* Serwis 1: Baza danych SQLite – Przechowuje informacje o wydarzeniach (id, title, city).
-    - Technika testowania: In-memory database. Testy integracyjne używają bazy w pamięci (:memory:), co gwarantuje szybkość i brak efektów ubocznych w systemie plików.
-* Serwis 2: API Open-Meteo – Dostarcza rzeczywiste dane pogodowe.
-    - Technika testowania: Mockowanie (unittest.mock). W testach symulujemy odpowiedzi serwera (success/failure), co pozwala na testowanie logiki bez połączenia z internetem.
+- **Service 1: SQLite Database** – Stores event information (id, title, city).  
+  - Testing technique: In-memory database. Integration tests utilize an in-memory database (`:memory:`), ensuring high performance and preventing side effects within the file system.  
 
-## 3. Instrukcja uruchomienia
+- **Service 2: Open-Meteo API** – Provides real-time weather data.  
+  - Testing technique: Mocking (`unittest.mock`). Tests simulate server responses (success/failure), allowing the logic to be verified without an active internet connection.  
 
-### Wymagania
-* Python 3.8+
-* Biblioteki zewnętrzne wymienione w requirements.txt
+## 3. Setup Instructions
 
-### Instalacja
-1. Sklonuj repozytorium lub wypakuj pliki projektu.
-2. Zainstaluj wymagane zależności komendą:
-   pip install -r requirements.txt
+### Prerequisites
+- Python 3.8+  
+- External libraries listed in `requirements.txt`  
 
-### Uruchamianie aplikacji
-Aplikacja oferuje dwa niezależne interfejsy:
-1. CLI (Linia komend):
-   python main.py
-2. GUI (Interfejs graficzny):
-   python gui_app.py
+### Installation
+1. Clone the repository or extract the project files.  
+2. Install the required dependencies using `pip install -r requirements.txt`  
 
-## 4. Sposób korzystania
+### Running the Application
+The application offers two independent interfaces:  
+1. CLI (Command Line Interface): run `python main.py`  
+2. GUI (Graphical User Interface): run `python gui_app.py`  
 
-### Interfejs CLI (main.py)
-Po uruchomieniu programu dostępne są następujące komendy:
-* add <id> <title> <city> - dodaje nowe wydarzenie do bazy.
-* list - wyświetla wszystkie zapisane wydarzenia.
-* weather <id> - sprawdza aktualną pogodę dla miasta przypisanego do wydarzenia.
-* delete <id> - usuwa wydarzenie o podanym identyfikatorze.
-* help - wyświetla listę dostępnych komend.
-* exit - kończy działanie programu.
+## 4. Usage
 
-### Interfejs GUI (gui_app.py)
-* Dodawanie: Wprowadź dane w pola ID, Title oraz City, a następnie kliknij "Add Event".
-* Pogoda: Zaznacz wydarzenie na liście i kliknij "Check Weather".
-* Usuwanie: Zaznacz wydarzenie na liście i kliknij "Delete Selected".
+### CLI Interface (main.py)
+Once the program is running, the following commands are available:  
+- `add [id] [title] [city]` – Adds a new event to the database  
+- `list` – Displays all saved events  
+- `weather [id]` – Checks the current weather for the city assigned to the event  
+- `delete [id]` – Removes the event with the specified ID  
+- `help` – Displays a list of available commands  
+- `exit` – Terminates the program  
 
-## 5. Testy i Raporty
+### GUI Interface (gui_app.py)
+- **Adding:** Enter data into the ID, Title, and City fields, then click "Add Event"  
+- **Weather:** Select an event from the list and click "Check Weather"  
+- **Deleting:** Select an event from the list and click "Delete Selected"  
 
-### Uruchamianie testów
-Projekt zawiera testy jednostkowe, integracyjne oraz scenariusz E2E. Aby je uruchomić, użyj komendy:
-pytest test_main.py
+## 5. Testing and Reports
 
-### Generowanie raportów (Wymóg zaliczeniowy)
-1. Raport wykonania testów (HTML):
-   pytest --html=report.html --self-contained-html
-2. Raport pokrycia kodu (Coverage):
-   pytest --cov=app --cov=main --cov-report=term-missing
+### Running Tests
+The project includes unit tests, integration tests, and an E2E (End-to-End) scenario. Run them using `pytest test_main.py`  
 
-Scenariusz testu E2E jest zdefiniowany w funkcji test_full_e2e_flow w pliku test_main.py.
+### Generating Reports (Academic Requirement)
+- Test Execution Report (HTML): `pytest --html=report.html --self-contained-html`  
+- Code Coverage Report: `pytest --cov=app --cov=main --cov-report=term-missing`  
+
+The E2E test scenario is defined in the `test_full_e2e_flow` function within the `test_main.py` file.
